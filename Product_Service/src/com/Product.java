@@ -25,7 +25,7 @@ public class Product {
 		return con;
 	}
 
-	public String insertProduct(String pID, int rID, String pname, String pdesc, String pQuality, String price) 
+	public String insertProduct(String pID, String rID, String pname, String pdesc, String pQuality, String price) 
 	{   
 		String output = ""; 
 	 
@@ -45,7 +45,7 @@ public class Product {
  
 			// binding values
 			preparedStmt.setString(1, pID);
-			preparedStmt.setInt(2, rID);
+			preparedStmt.setString(2, rID);
 			preparedStmt.setString(3, pname);
 			preparedStmt.setString(4, pdesc);
 			preparedStmt.setString(5, pQuality);
@@ -93,7 +93,7 @@ public class Product {
 						{
 											
 							String product_id = rs.getString("product_id");
-							String cust_id = String.valueOf(rs.getInt("researcher_id"));
+							String cust_id = rs.getString("researcher_id");
 							String product_name = rs.getString("product_name");
 							String product_description = rs.getString("product_description");
 							String product_quality = rs.getString("product_quality");
@@ -128,7 +128,7 @@ public class Product {
 		return output;  
 	}
 	
-	public String updateProduct(String pID, int rID, String pname, String pdesc, String pQuality, String price)
+	public String updateProduct(String pID, String rID, String pname, String pdesc, String pQuality, String price)
 	{
 		 String output = "";
 		 try
@@ -145,7 +145,7 @@ public class Product {
 		 
 			 // binding values
 			 preparedStmt.setString(6, pID);
-			 preparedStmt.setInt(1, rID);
+			 preparedStmt.setString(1, rID);
 			 preparedStmt.setString(2, pname);
 			 preparedStmt.setString(3, pdesc);
 			 preparedStmt.setString(4, pQuality);
