@@ -1,3 +1,4 @@
+<%@page import="com.Product"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -39,7 +40,8 @@
 			   <br>
 				<div id="divProductGrid">
 					<%
-					    Product productObj = new Product();
+					   
+						Product productObj = new Product();
 						out.print(productObj.readProduct());
 					%>
 				</div>

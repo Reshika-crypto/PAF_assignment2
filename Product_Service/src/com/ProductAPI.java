@@ -1,5 +1,4 @@
- package com;
-
+package com;
 import com.Product;
 import java.io.IOException; 
 import java.util.HashMap; 
@@ -18,15 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class PaymentService
  */
-@WebServlet("/ProductService")
-public class ProductService extends HttpServlet {
+@WebServlet("/ProductAPI")
+public class ProductAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	Product productObj = new Product();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductService() {
+    public ProductAPI() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +35,7 @@ public class ProductService extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -60,9 +59,9 @@ public class ProductService extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method
 
-		Map paras = getParasMap(request); 
+		/*Map paras = getParasMap(request); 
 		 
-		 String output = productObj.updateProduct(paras.get("hidProductIDSave").toString(),     
+		 String output = productObj.updateProduct(pID, rID, pname, pdesc, pQuality, price)(paras.get("hidProductIDSave").toString(),     
 		    		paras.get("pID").toString(),     
 		    		paras.get("rID").toString(),        
 		    		paras.get("pname").toString(),
@@ -70,9 +69,13 @@ public class ProductService extends HttpServlet {
 		    		paras.get("pQuality").toString(),
 		    		paras.get("price").toString()); 
 		 
-		 			response.getWriter().write(output);
-	}
-
+		 			response.getWriter().write(output);*/
+		 			
+	Map paras = getParasMap(request);
+	String output = productObj.updateProduct(paras.get("hidProductIDSave").toString(), paras.get("pID").toString(), paras.get("rID").toString(), 
+											paras.get("pname").toString(),paras.get("pdesc").toString(),paras.get("pQuality").toString(),paras.get("price").toString()); 
+	response.getWriter().write(output);
+}
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */

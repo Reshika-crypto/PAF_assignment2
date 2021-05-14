@@ -28,7 +28,7 @@ $(document).on("click", "#btnSave", function(event)
 
 	$.ajax( 
 	{  
-			url : "ProductService",  
+			url : "ProductAPI",  
 			type : type,  
 			data : $("#formProduct").serialize(),  
 			dataType : "text",  
@@ -80,9 +80,9 @@ $(document).on("click", ".btnUpdate", function(event)
 	$("#pID").val($(this).closest("tr").find('td:eq(0)').text());     
 	$("#rID").val($(this).closest("tr").find('td:eq(1)').text());     
 	$("#pname").val($(this).closest("tr").find('td:eq(2)').text();
-	$("#pdesc").val($(this).closest("tr").find('td:eq(2)').text();
-	$("#pQuality").val($(this).closest("tr").find('td:eq(2)').text();
-	$("#price").val($(this).closest("tr").find('td:eq(2)').text());     
+	$("#pdesc").val($(this).closest("tr").find('td:eq(3)').text();
+	$("#pQuality").val($(this).closest("tr").find('td:eq(4)').text();
+	$("#price").val($(this).closest("tr").find('td:eq(5)').text());     
 }); 
 
 
@@ -93,7 +93,7 @@ $(document).on("click", ".btnRemove", function(event)
 {  
 	$.ajax(  
 	{   
-		url : "ProductService",   
+		url : "ProductAPI",   
 		type : "DELETE",   
 		data : "pID=" + $(this).data("productid"),   
 		dataType : "text",   
