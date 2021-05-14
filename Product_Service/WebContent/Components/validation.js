@@ -25,7 +25,6 @@ $(document).on("click", "#btnSave", function(event)
  
 	// If valid------------------------  
 	var type = ($("#hidProductIDSave").val() == "") ? "POST" : "PUT"; 
-
 	$.ajax( 
 	{  
 			url : "ProductAPI",  
@@ -74,22 +73,25 @@ function onProductSaveComplete(response, status)
 
  
 // UPDATE========================================== 
-$(document).on("click", ".btnUpdate", function(event) 
+$(document).on("click", "#productid", function(event) 
 {     
-	$("#hidProductIDSave").val($(this).closest("tr").find('#hidProductIDUpdate').val());     
-	$("#pID").val($(this).closest("tr").find('td:eq(0)').text());     
-	$("#rID").val($(this).closest("tr").find('td:eq(1)').text());     
-	$("#pname").val($(this).closest("tr").find('td:eq(2)').text();
-	$("#pdesc").val($(this).closest("tr").find('td:eq(3)').text();
-	$("#pQuality").val($(this).closest("tr").find('td:eq(4)').text();
-	$("#price").val($(this).closest("tr").find('td:eq(5)').text());     
+	
+	$("#hidProductIDSave").val($(this).data("productid"));     
+	$("#product_id").val($(this).closest("tr").find('td:eq(0)').text());    
+	$("#researcher_id").val($(this).closest("tr").find('td:eq(1)').text());     
+	$("#product_name").val($(this).closest("tr").find('td:eq(2)').text());
+	$("#product_description").val($(this).closest("tr").find('td:eq(3)').text());
+	$("#product_quality").val($(this).closest("tr").find('td:eq(4)').text());
+	$("#product_price").val($(this).closest("tr").find('td:eq(5)').text()); 
+	
+	   
 }); 
 
 
 
 
 //REMOVE===========================================
-$(document).on("click", ".btnRemove", function(event) 
+$(document).on("click", "#btnRemove", function(event) 
 {  
 	$.ajax(  
 	{   
@@ -140,37 +142,37 @@ function onProductDeleteComplete(response, status)
 function validateProductForm() 
 {  
 	// Product ID  
-	if ($("#pID").val().trim() == "")  
+	if ($("#product_id").val().trim() == "")  
 	{   
 		return "Insert Product ID.";  
 	} 
 
 	// Researcher ID------------------------  
-	if ($("#rID").val().trim() == "")  
+	if ($("#researcher_id").val().trim() == "")  
 	{   
 		return "Insert Researcher ID.";  
 	} 
 	
 	// Product Name------------------------  
-	if ($("#pname").val().trim() == "")  
+	if ($("#product_name").val().trim() == "")  
 	{   
 		return "Insert Product Name.";  
 	} 
 	
 	// Description------------------------  
-	if ($("#pdesc").val().trim() == "")  
+	if ($("#product_description").val().trim() == "")  
 	{   
 		return "Insert Description.";  
 	} 
 	
 	// Quality------------------------  
-	if ($("#pQuality").val().trim() == "")  
+	if ($("#product_quality").val().trim() == "")  
 	{   
 		return "Insert Quality.";  
 	} 
 	
 	// Price-------------------------------
-	 var tmpprice = $("#price").val().trim();
+	var tmpprice = $("#product_price").val().trim();
 	if (!$.isNumeric(tmpprice)) 
 	 {
 	 return "Insert Price.";

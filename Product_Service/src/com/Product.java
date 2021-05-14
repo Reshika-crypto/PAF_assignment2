@@ -6,8 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+
 
 
 public class Product {
@@ -38,7 +37,7 @@ public class Product {
 	 
 			// create a prepared statement
 			
-			String query = "insert into product (`product_id`,`researcher_id`, `product_name`,`product_description`,`product_quality`,`product_price`)"
+			String query = "insert into paf_productservice.product (`product_id`,`researcher_id`, `product_name`,`product_description`,`product_quality`,`product_price`)"
 							+ " values (?, ?, ?, ?, ?, ?)";
  
 			PreparedStatement preparedStmt = con.prepareStatement(query);
@@ -84,7 +83,7 @@ public class Product {
 			// Prepare the html table to be displayed    
 			output = "<table border=\'1\'><tr><th>product_id</th><th>researcher_id</th><th>product_name</th><th>product_description</th><th>product_quality</th><th>product_price</th><th>Update</th><th>Remove</th></tr>";
 	 
-			String query = "select * from product";    
+			String query = "select * from paf_productservice.product";    
 			Statement stmt = (Statement) con.createStatement();
 			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
 	 
@@ -93,7 +92,7 @@ public class Product {
 						{
 											
 							String product_id = rs.getString("product_id");
-							String cust_id = rs.getString("researcher_id");
+							String researcher_id = rs.getString("researcher_id");
 							String product_name = rs.getString("product_name");
 							String product_description = rs.getString("product_description");
 							String product_quality = rs.getString("product_quality");
@@ -101,19 +100,26 @@ public class Product {
 						 
 							// Add into the html table
 							output += "<tr><td>" + product_id + "</td>";
-							output += "<td>" +cust_id + "</td>";
+							output += "<td>" +researcher_id + "</td>";
 							output += "<td>" + product_name + "</td>";
 							output += "<td>" + product_description + "</td>";
 							output += "<td>" + product_quality + "</td>";
 							output += "<td>" + product_price + "</td>";
 						 
 							// buttons
-							output += "<td><input name='btnUpdate' type='button' value='Update'class='btn btn-secondary'></td>"
-										+ "<td><form method='post' action='product.jsp'>"
+							/*output += "<td><input name='btnUpdate' type='button' value='Update'class='btn btn-secondary'></td>"
+										+ "<td><form method='post' action='ProductUI.jsp'>"
 										+ "<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
 										+ "<input name='productID' type='hidden' value='" + product_id
-										+ "'>" + "</form></td></tr>";
-						 }
+										+ "'>" + "</form></td></tr>";*/
+						 
+						
+						// buttons
+						    output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary' data-productid='" + product_id +"'></td> "
+						    		+ "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-productid='" + product_id + "'></td></tr>";
+				
+					
+						}
 						 con.close();
 						 
 						 // Complete the html table
@@ -139,7 +145,7 @@ public class Product {
 			 {return "Error while connecting to the database for updating."; }
 		 
 			 // create a prepared statement
-			 String query = "UPDATE product SET researcher_id = ? , product_name=?,product_description=?,product_quality=?,product_price=? WHERE product_id=?";
+			 String query = "UPDATE paf_productservice.product SET researcher_id = ? , product_name=?,product_description=?,product_quality=?,product_price=? WHERE product_id=?";
 		 
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 		 
@@ -167,7 +173,7 @@ public class Product {
 	  return output;  
 	} 
 	
-	public String deleteProduct(String pID)   
+	/*public String deleteProduct(String pID)   
 	{   
 		String output = ""; 
 	 
@@ -183,7 +189,7 @@ public class Product {
 	 
 			// create a prepared statement
 			 
-			String query = "delete from product where product_id=?";
+			String query = "delete from paf_productservice.product where product_id=?";
 			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 	 
@@ -203,6 +209,46 @@ public class Product {
 		} 
 	 
 		return output;  
-	}
+	}*/
+	
+	
+	public String deleteProduct(String pID) 
+	 
+	{ 
+					 
+		String output = ""; 		 
+		try
+		{ 		 
+			Connection con = connect(); 		 
+			if (con == null) 
+					 
+			{ 
+				return "Error while connecting to the database for deleting."; 
+			} 
+			
+			// create a prepared statement
+			String query = "delete from paf_productservice.product where product_id=?"; 
+			PreparedStatement preparedStmt = con.prepareStatement(query); 
+					 
+			// binding values		 
+			preparedStmt.setString(1, pID); 
+					 
+			// execute the statement
+			preparedStmt.execute(); 
+			con.close(); 
+			
+			String newProduct = readProduct(); 
+			output = "{\"status\":\"success\", \"data\": \"" + newProduct + "\"}"; 
+			
+		} 
+		catch (Exception e) 
+		{ 
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting the product.\"}"; 
+			System.err.println(e.getMessage()); 
+			e.printStackTrace();
+		} 
+		
+		return output; 
+	} 
 	
 }
